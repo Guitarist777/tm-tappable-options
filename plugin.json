@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "uuid": "b3f1c2a4-8d5e-4f6a-9c7b-2e1d3a4f5b6c",
+  "id": "ask_user_options",
+  "emoji": "🔘",
+  "title": "Tappable Questions",
+  "overview": "Lets the AI ask clarifying questions as tappable option buttons instead of prose, mimicking Claude.ai's interactive question feature.\n\nWhen the AI needs to understand your preferences before giving advice (goals, constraints, style), it renders 1-3 questions with 2-4 tappable options each. Tapping an option sends it back to the AI as your reply.\n\n**Requires the companion 'Tappable Questions Bridge' extension** to be installed for taps to auto-send. Without the extension, tapped options are copied to your clipboard instead.",
+  "openaiSpec": {
+    "name": "ask_user_options",
+    "description": "Present tappable option buttons to gather the user's preferences BEFORE providing advice or recommendations. This renders interactive buttons the user can tap to answer, which is much easier than typing.\n\nWHEN TO USE: Use this for ELICITATION - when you need to understand the user's preferences, constraints, or goals to give useful advice. Examples: 'Help me plan a workout routine' -> ask about goals (strength/cardio/weight loss), time available, equipment. 'Help me find a book' -> ask about genres, mood, recent favorites. 'Help me pick a gift' -> ask about occasion, budget, recipient's interests.\n\nCRITICAL: Before asking, check the conversation - if the answer is already there or inferable, use it instead of asking. If you are about to write clarifying questions as prose or bullet points, STOP - use this tool instead.\n\nWHEN NOT TO USE: (1) User asks 'A or B?' - they want YOUR analysis, not the options repeated back as buttons. (2) User is venting or processing emotions - just respond supportively. (3) User asks for your opinion - give it directly. (4) Factual questions - just answer. (5) User needs prose feedback on their work. (6) User already gave a detailed prompt with specific constraints - proceed with those and state any assumptions inline.\n\nKeep it to ONE question where possible - three is a hard ceiling, not a target. Each question gets 2-4 short, mutually exclusive options. Always write a brief conversational message before calling this tool - never present options silently.\n\nAfter calling this, END YOUR TURN and wait. The user's selection will arrive as their next message. Do not answer the questions yourself or continue writing.",
+    "parameters": {
+      "type": "object",
+      "required": ["questions"],
+      "properties": {
+        "questions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "description": "1-3 questions to ask the user. Prefer a single question.",
+          "items": {
+            "type": "object",
+            "required": ["question", "options"],
+            "properties": {
+              "question": {
+                "type": "string",
+                "description": "The question text shown to the user. Keep it short and direct."
+              },
+              "options": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "description": "2-4 mutually exclusive options with short labels (1-5 words each).",
+                "items": {
+                  "type": "string",
+                  "description": "A short option label"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": ["single_select", "multi_select"],
+                "description": "Question type: 'single_select' (default) for choosing exactly 1 option, 'multi_select' for choosing 1 or more options."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "implementationType": "javascript",
+  "outputType": "render_html"
+}
