@@ -15,7 +15,7 @@ async function ask_user_options(params) {
     const options = (Array.isArray(q && q.options) ? q.options : [])
       .map((o) => String(o).trim())
       .filter(Boolean)
-      .slice(0, 4);
+      .slice(0, 6);
     if (!question || options.length < 2) {
       throw new Error(
         'Question #' +
