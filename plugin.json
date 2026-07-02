@@ -29,7 +29,7 @@
                 "type": "array",
                 "minItems": 2,
                 "maxItems": 6,
-                "description": "2-4 mutually exclusive options with short labels (1-8 words each).",
+                "description": "2-6 mutually exclusive options with short labels (1-8 words each).",
                 "items": {
                   "type": "string",
                   "description": "A short option label"
